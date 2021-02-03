@@ -22,4 +22,10 @@ node {
             sh "docker image rm ${registryName}/${imageName}"
         }
     }
+
+    stage('pushImage') {
+        docker.withRegistry("${ProdregistryName}") {
+            image.push()
+        }
+    }
 }
