@@ -10,16 +10,16 @@ node {
     }
 
     stage('pullImage') {
-        image = docker.image("${params.registryName}/${params.imageName}")
+        image = docker.image("${params.registryName}/${params.imageName_0}")
         image.pull()
     }
 
     stage('Scan image') {
         try {
-            prismaCloudScanImage ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', ignoreImageBuildTime: true, image: "${registryName}/${imageName}", key: '', logLevel: 'debug', podmanPath: '', project: '', resultsFile: 'prisma-cloud-scan-results.json'
+            prismaCloudScanImage ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', ignoreImageBuildTime: true, image: "${registryName}/${imageName_0}", key: '', logLevel: 'debug', podmanPath: '', project: '', resultsFile: 'prisma-cloud-scan-results.json'
         } finally {
             prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
-            sh "docker image rm ${registryName}/${imageName}"
+            sh "docker image rm ${registryName}/${imageName_0}"
         }
     }
 }
